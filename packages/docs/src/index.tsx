@@ -33,9 +33,10 @@ const propsStore = new PropsStore(require<IInterfaceEntry[]>("./generated/props.
 // run non-React code on the newly rendered sections.
 const updateExamples = () => {
     // indeterminate checkbox styles must be applied via JavaScript.
-    document.queryAll(".pt-checkbox input[indeterminate]").forEach((el: HTMLInputElement) => {
-        el.indeterminate = true;
-    });
+    const indeterminates = document.querySelectorAll(".pt-checkbox input[indeterminate]");
+    for (let i = 0; i < indeterminates.length; i++) {
+        (indeterminates[i] as HTMLInputElement).indeterminate = true;
+    }
 };
 
 // this is invoked exactly once so there's no penalty for lambdas and they make the code cleaner
@@ -50,7 +51,7 @@ ReactDOM.render(
         releases={releases}
         versions={versions}
     />,
-    document.query("#blueprint-documentation")
+    document.querySelector("#blueprint-documentation")
 );
 // tslint:enable:jsx-no-lambda
 

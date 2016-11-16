@@ -2,6 +2,8 @@
  * Copyright 2015-present Palantir Technologies, Inc. All rights reserved.
  */
 
+import "../src/common/domPolyfills";
+
 import "./alert/alertTests";
 import "./breadcrumbs/breadcrumbTests";
 import "./buttons/buttonTests";

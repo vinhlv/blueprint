@@ -116,7 +116,7 @@ describe("<Tree>", () => {
 
         renderTree({contents});
 
-        const iconSelector = `.${Classes.TREE_NODE_ICON}.pt-icon-document`;
+        const iconSelector = `${Classes.TREE_NODE_ICON}.pt-icon-document`;
         assert.isNull(queryTreeNode("c0", Classes.TREE_NODE_ICON));
         assert.isNotNull(queryTreeNode("c1", iconSelector));
         assert.isNotNull(queryTreeNode("c2", iconSelector));
@@ -161,7 +161,8 @@ describe("<Tree>", () => {
         assert.isNull(document.querySelector(`.c0 ${secondaryLabelSelector}`));
         let label: HTMLElement = queryTreeNode("c1", Classes.TREE_NODE_SECONDARY_LABEL) as HTMLElement;
         assert.strictEqual(label.innerText, "Secondary");
-        assert.strictEqual((label.firstChild as HTMLElement).innerText, "Paragraph");
+        label = queryTreeNode("c2", Classes.TREE_NODE_SECONDARY_LABEL).firstChild as HTMLElement;
+        assert.strictEqual(label.innerText, "Paragraph");
     });
 
     function renderTree(props?: any) {

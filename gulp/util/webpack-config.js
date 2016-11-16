@@ -42,7 +42,6 @@ const TYPESCRIPT_CONFIG = {
 const EXTERNALS = {
     "@blueprintjs/core": "Blueprint",
     "classnames": "classNames",
-    "dom4": "window",
     "jquery": "$",
     "react-addons-css-transition-group": "React.addons.CSSTransitionGroup",
     "react-day-picker": "DayPicker",

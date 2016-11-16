@@ -41,7 +41,6 @@ const projects = [
             entry: "src/index.tsx",
             dest: "dist",
             localResolve: [
-                "dom4",
                 "jquery",
                 "normalize.css",
                 "react",

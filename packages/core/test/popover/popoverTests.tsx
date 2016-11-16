@@ -17,7 +17,7 @@ import {
     SVGPopover,
     Tooltip,
 } from "../../src/index";
-import { queryClass, queryClassAll } from "../common/domUtils";
+import { queryClass } from "../common/domUtils";
 import { dispatchMouseEvent } from "../common/utils";
 
 describe("<Popover>", () => {

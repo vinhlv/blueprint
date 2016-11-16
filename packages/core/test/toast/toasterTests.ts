@@ -8,7 +8,7 @@ import * as ReactDOM from "react-dom";
 
 import * as Classes from "../../src/common/classes";
 import { IToaster, Toaster } from "../../src/index";
-import { queryClass, queryClassAll } from "../common/domUtils";
+import { queryClass } from "../common/domUtils";
 
 describe("Toaster", () => {
     let testsContainerElement: HTMLElement;
@@ -26,7 +26,7 @@ describe("Toaster", () => {
     });
 
     it("does not attach .pt-toast-container to body on script load", () => {
-        assert.lengthOf(document.getElementsByClassName(Classes.TOAST_CONTAINER), 0, "unexpected toast container");
+        assert.isNull(queryClass(document, Classes.TOAST_CONTAINER), "unexpected toast container");
     });
 
     it("show() renders toast immediately", () => {

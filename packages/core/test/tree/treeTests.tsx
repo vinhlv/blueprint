@@ -48,19 +48,19 @@ describe("<Tree>", () => {
         contents[2].hasCaret = contents[3].hasCaret = false;
         renderTree({contents});
 
-        assert.isNotNull(document.querySelector(`.c0 > .${Classes.TREE_NODE_CONTENT} .${Classes.TREE_NODE_CARET}`));
-        assert.isNotNull(document.querySelector(`.c1 > .${Classes.TREE_NODE_CONTENT} .${Classes.TREE_NODE_CARET}`));
-        assert.isNotNull(document.querySelector(`.c2 > .${Classes.TREE_NODE_CONTENT} .${Classes.TREE_NODE_CARET_NONE}`));
-        assert.isNotNull(document.querySelector(`.c3 > .${Classes.TREE_NODE_CONTENT} .${Classes.TREE_NODE_CARET_NONE}`));
+        assert.isNotNull(queryTreeNode("c0", Classes.TREE_NODE_CARET));
+        assert.isNotNull(queryTreeNode("c1", Classes.TREE_NODE_CARET));
+        assert.isNotNull(queryTreeNode("c2", Classes.TREE_NODE_CARET_NONE));
+        assert.isNotNull(queryTreeNode("c3", Classes.TREE_NODE_CARET_NONE));
     });
 
     it("if not specified, caret visibility is determined by the presence of children", () => {
         renderTree();
 
-        assert.isNotNull(document.querySelector(`.c0 > .${Classes.TREE_NODE_CONTENT} .${Classes.TREE_NODE_CARET_NONE}`));
-        assert.isNotNull(document.querySelector(`.c1 > .${Classes.TREE_NODE_CONTENT} .${Classes.TREE_NODE_CARET}`));
-        assert.isNotNull(document.querySelector(`.c2 > .${Classes.TREE_NODE_CONTENT} .${Classes.TREE_NODE_CARET_NONE}`));
-        assert.isNotNull(document.querySelector(`.c3 > .${Classes.TREE_NODE_CONTENT} .${Classes.TREE_NODE_CARET}`));
+        assert.isNotNull(queryTreeNode("c0", Classes.TREE_NODE_CARET_NONE));
+        assert.isNotNull(queryTreeNode("c1", Classes.TREE_NODE_CARET));
+        assert.isNotNull(queryTreeNode("c2", Classes.TREE_NODE_CARET_NONE));
+        assert.isNotNull(queryTreeNode("c3", Classes.TREE_NODE_CARET));
     });
 
     it("caret direction is determined by node expansion", () => {
@@ -73,10 +73,10 @@ describe("<Tree>", () => {
 
         renderTree({contents});
 
-        assert.isNotNull(document.querySelector(`.c0 > .${Classes.TREE_NODE_CONTENT} .${Classes.TREE_NODE_CARET_OPEN}`));
-        assert.isNotNull(document.querySelector(`.c1 > .${Classes.TREE_NODE_CONTENT} .${Classes.TREE_NODE_CARET_CLOSED}`));
-        assert.isNotNull(document.querySelector(`.c2 > .${Classes.TREE_NODE_CONTENT} .${Classes.TREE_NODE_CARET_CLOSED}`));
-        assert.isNotNull(document.querySelector(`.c3 > .${Classes.TREE_NODE_CONTENT} .${Classes.TREE_NODE_CARET_OPEN}`));
+        assert.isNotNull(queryTreeNode("c0", Classes.TREE_NODE_CARET_OPEN));
+        assert.isNotNull(queryTreeNode("c1", Classes.TREE_NODE_CARET_CLOSED));
+        assert.isNotNull(queryTreeNode("c2", Classes.TREE_NODE_CARET_CLOSED));
+        assert.isNotNull(queryTreeNode("c3", Classes.TREE_NODE_CARET_OPEN));
     });
 
     it("event callbacks are fired correctly", () => {
@@ -90,21 +90,21 @@ describe("<Tree>", () => {
 
         renderTree({contents, onNodeClick, onNodeCollapse, onNodeDoubleClick, onNodeExpand});
 
-        TestUtils.Simulate.click(document.querySelector(`.c0 > .${Classes.TREE_NODE_CONTENT}`));
+        TestUtils.Simulate.click(queryTreeNode("c0"));
         assert.isTrue(onNodeClick.calledOnce);
         assert.deepEqual(onNodeClick.args[0][1], [0]);
 
-        TestUtils.Simulate.click(document.querySelector(`.c1 > .${Classes.TREE_NODE_CONTENT} .${Classes.TREE_NODE_CARET}`));
+        TestUtils.Simulate.click(queryTreeNode("c1", Classes.TREE_NODE_CARET));
         assert.isTrue(onNodeExpand.calledOnce);
         assert.deepEqual(onNodeExpand.args[0][1], [1]);
         // make sure that onNodeClick isn't fired again, only onNodeExpand should be
         assert.isTrue(onNodeClick.calledOnce);
 
-        TestUtils.Simulate.doubleClick(document.querySelector(`.c6 > .${Classes.TREE_NODE_CONTENT}`));
+        TestUtils.Simulate.doubleClick(queryTreeNode("c6"));
         assert.isTrue(onNodeDoubleClick.calledOnce);
         assert.deepEqual(onNodeDoubleClick.args[0][1], [3, 0]);
 
-        TestUtils.Simulate.click(document.querySelector(`.c3 > .${Classes.TREE_NODE_CONTENT} .${Classes.TREE_NODE_CARET}`));
+        TestUtils.Simulate.click(queryTreeNode("c3", Classes.TREE_NODE_CARET));
         assert.isTrue(onNodeCollapse.calledOnce);
         assert.deepEqual(onNodeCollapse.args[0][1], [3]);
     });
@@ -117,9 +117,9 @@ describe("<Tree>", () => {
         renderTree({contents});
 
         const iconSelector = `.${Classes.TREE_NODE_ICON}.pt-icon-document`;
-        assert.isNull(document.querySelector(`.c0 > .${Classes.TREE_NODE_CONTENT} .${Classes.TREE_NODE_ICON}`));
-        assert.isNotNull(document.querySelector(`.c1 > .${Classes.TREE_NODE_CONTENT} ${iconSelector}`));
-        assert.isNotNull(document.querySelector(`.c2 > .${Classes.TREE_NODE_CONTENT} ${iconSelector}`));
+        assert.isNull(queryTreeNode("c0", Classes.TREE_NODE_ICON));
+        assert.isNotNull(queryTreeNode("c1", iconSelector));
+        assert.isNotNull(queryTreeNode("c2", iconSelector));
     });
 
     it("isExpanded controls node expansion", () => {
@@ -159,10 +159,9 @@ describe("<Tree>", () => {
 
         const secondaryLabelSelector = `> .${Classes.TREE_NODE_CONTENT} .${Classes.TREE_NODE_SECONDARY_LABEL}`;
         assert.isNull(document.querySelector(`.c0 ${secondaryLabelSelector}`));
-        let label: HTMLElement = document.querySelector(`.c1 ${secondaryLabelSelector}`) as HTMLElement;
+        let label: HTMLElement = queryTreeNode("c1", Classes.TREE_NODE_SECONDARY_LABEL) as HTMLElement;
         assert.strictEqual(label.innerText, "Secondary");
-        label = document.querySelector(`.c2 ${secondaryLabelSelector}`).firstChild as HTMLElement;
-        assert.strictEqual(label.innerText, "Paragraph");
+        assert.strictEqual((label.firstChild as HTMLElement).innerText, "Paragraph");
     });
 
     function renderTree(props?: any) {
@@ -180,5 +179,13 @@ describe("<Tree>", () => {
             {id: 3, className: "c3", label: "Item 3", childNodes: [{id: 6, className: "c6", label: "Item 6"}]},
             {id: 4, className: "c4", label: "Item 4", childNodes: [{id: 7, className: "c7", label: "Item 7"}]},
         ];
+    }
+
+    function queryTreeNode(treeClass: string, childClass?: string) {
+        const treeNode = document.querySelector(`.${treeClass} > .${Classes.TREE_NODE_CONTENT}`);
+        if (childClass == null) {
+            return treeNode;
+        }
+        return treeNode.querySelector(`.${childClass}`);
     }
 });

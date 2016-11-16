@@ -8,6 +8,7 @@ import * as ReactDOM from "react-dom";
 
 import * as Classes from "../../src/common/classes";
 import { IToaster, Toaster } from "../../src/index";
+import { queryClass, queryClassAll } from "../common/domUtils";
 
 describe("Toaster", () => {
     let testsContainerElement: HTMLElement;
@@ -33,7 +34,7 @@ describe("Toaster", () => {
             message: "Hello world",
         });
         assert.lengthOf(toaster.getToasts(), 1, "expected 1 toast");
-        assert.isNotNull(document.query(`.${Classes.TOAST_CONTAINER}.${Classes.OVERLAY_OPEN}`));
+        assert.isNotNull(queryClass(document, [Classes.TOAST_CONTAINER, Classes.OVERLAY_OPEN]));
     });
 
     it("multiple show()s renders them all", () => {
@@ -75,7 +76,7 @@ describe("Toaster", () => {
             message: "message",
             timeout: 0,
         });
-        const action = document.queryAll(`.${Classes.TOAST} .${Classes.BUTTON}`)[0] as HTMLElement;
+        const action = document.querySelectorAll(`.${Classes.TOAST} .${Classes.BUTTON}`)[0] as HTMLElement;
         action.click();
         assert.isTrue(onClick.calledOnce, "expected onClick to be called once");
     });
@@ -87,7 +88,7 @@ describe("Toaster", () => {
             onDismiss: handleDismiss,
             timeout: 0,
         });
-        const dismiss = document.queryAll(`.${Classes.TOAST} .${Classes.BUTTON}`)[0] as HTMLElement;
+        const dismiss = document.querySelectorAll(`.${Classes.TOAST} .${Classes.BUTTON}`)[0] as HTMLElement;
         dismiss.click();
         assert.isTrue(handleDismiss.calledOnce);
     });

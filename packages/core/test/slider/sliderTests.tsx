@@ -119,7 +119,7 @@ describe("<Slider>", () => {
         // spy on instance method instead of onChange because we can't supply nativeEvent
         const trackClickSpy = sinon.spy(slider.instance(), "handleTrackClick");
         slider.find(trackSelector)
-            .simulate("mousedown", { target: testsContainerElement.query(trackSelector) });
+            .simulate("mousedown", { target: testsContainerElement.querySelector(trackSelector) });
         assert.isTrue(trackClickSpy.notCalled, "handleTrackClick was called when disabled");
     });
 

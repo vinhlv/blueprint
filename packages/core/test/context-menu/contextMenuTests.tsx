@@ -8,6 +8,7 @@ import { mount } from "enzyme";
 import * as React from "react";
 
 import { Classes, ContextMenu, ContextMenuTarget, Menu, MenuItem } from "../../src/index";
+import { queryClass, queryClassAll } from "../common/domUtils";
 
 const MENU_ITEMS = [
     { iconName: "align-left", text: "Align Left" },
@@ -73,16 +74,16 @@ describe("ContextMenu", () => {
 });
 
 function getPopover() {
-    return document.query(`.${Classes.POPOVER}.${Classes.MINIMAL}`);
+    return queryClass(document, [Classes.POPOVER, Classes.MINIMAL]);
 }
 
 function assertContextMenuWasRendered(expectedLength = MENU_ITEMS.length) {
-    const menu = document.query(`.${Classes.CONTEXT_MENU}`);
+    const menu = queryClass(document, Classes.CONTEXT_MENU);
     assert.isNotNull(menu);
     // popover is rendered in a Portal
     const popover = getPopover();
     assert.isNotNull(popover);
-    const menuItems = popover.queryAll(`.${Classes.MENU_ITEM}`);
+    const menuItems = queryClassAll(popover, Classes.MENU_ITEM);
     assert.lengthOf(menuItems, expectedLength);
 }
 

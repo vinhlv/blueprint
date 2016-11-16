@@ -17,6 +17,7 @@ import {
     SVGPopover,
     Tooltip,
 } from "../../src/index";
+import { queryClass, queryClassAll } from "../common/domUtils";
 import { dispatchMouseEvent } from "../common/utils";
 
 describe("<Popover>", () => {
@@ -131,15 +132,15 @@ describe("<Popover>", () => {
     it("inherits .pt-dark from trigger ancestor", () => {
         testsContainerElement.classList.add(Classes.DARK);
         renderPopover({ inline: false, isOpen: true });
-        assert.isNotNull(document.query(`.${Classes.POPOVER}.${Classes.DARK}`));
+        assert.isNotNull(findPopover(Classes.DARK));
         testsContainerElement.classList.remove(Classes.DARK);
     });
 
     it("inheritDarkTheme=false disables inheriting .pt-dark from trigger ancestor", () => {
         testsContainerElement.classList.add(Classes.DARK);
         renderPopover({ inheritDarkTheme: false, inline: false, isOpen: true });
-        assert.isNotNull(document.query(`.${Classes.POPOVER}`));
-        assert.isNull(document.query(`.${Classes.POPOVER}.${Classes.DARK}`));
+        assert.isNotNull(findPopover());
+        assert.isNull(findPopover(Classes.DARK));
         testsContainerElement.classList.remove(Classes.DARK);
     });
 
@@ -149,7 +150,7 @@ describe("<Popover>", () => {
             isOpen: true,
             popoverClassName: Classes.DARK,
         });
-        assert.isNotNull(document.query(`.${Classes.POPOVER}.${Classes.DARK}`));
+        assert.isNotNull(findPopover(Classes.DARK));
     });
 
     it("isModal=false does not render backdrop element", () => {
@@ -424,5 +425,13 @@ describe("<Popover>", () => {
             return wrapper;
         };
         return wrapper;
+    }
+
+    function findPopover(className?: string) {
+        const classes = [Classes.POPOVER];
+        if (className != null) {
+            classes.push(className);
+        }
+        return queryClass(document, classes);
     }
 });

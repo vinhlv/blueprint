@@ -13,6 +13,8 @@ import * as DateUtils from "../src/common/dateUtils";
 import * as Errors from "../src/common/errors";
 import { Classes as DateClasses, DateRange, DateRangePicker, IDateRangePickerProps } from "../src/index";
 
+import { queryAll } from "@blueprintjs/core/test/common/domUtils";
+
 describe("<DateRangePicker>", () => {
     let testsContainerElement: Element;
     let dateRangePicker: DateRangePicker;
@@ -175,12 +177,12 @@ describe("<DateRangePicker>", () => {
             const initialMonth = new Date(2015, 1, 5);
             renderDateRangePicker({ initialMonth, minDate });
             assert.strictEqual(dateRangePicker.state.displayMonth, 1);
-            let prevBtn = document.queryAll(".DayPicker-NavButton--prev");
+            let prevBtn = document.querySelectorAll(".DayPicker-NavButton--prev");
             assert.lengthOf(prevBtn, 1);
 
             TestUtils.Simulate.click(prevBtn[0]);
             assert.strictEqual(dateRangePicker.state.displayMonth, 0);
-            prevBtn = document.queryAll(".DayPicker-NavButton--prev");
+            prevBtn = document.querySelectorAll(".DayPicker-NavButton--prev");
             assert.lengthOf(prevBtn, 0);
         });
     });
@@ -409,13 +411,13 @@ describe("<DateRangePicker>", () => {
 
     function clickFirstShortcut() {
         const selector = `.${DateClasses.DATERANGEPICKER_SHORTCUTS} .${Classes.MENU_ITEM}`;
-        const firstShortcut = document.query(selector);
+        const firstShortcut = document.querySelector(selector);
         TestUtils.Simulate.click(firstShortcut);
     }
 
     function getDayElement(dayNumber = 1, fromLeftMonth = true) {
-        const month = document.queryAll(".DayPicker-Month")[fromLeftMonth ? 0 : 1];
-        const days = month.queryAll(`.${DateClasses.DATEPICKER_DAY}`);
+        const month = document.querySelectorAll(".DayPicker-Month")[fromLeftMonth ? 0 : 1];
+        const days = queryAll(month, `.${DateClasses.DATEPICKER_DAY}`);
         return days.filter((d) => {
             return d.textContent === dayNumber.toString()
                 && !d.classList.contains(DateClasses.DATEPICKER_DAY_OUTSIDE);
@@ -427,17 +429,18 @@ describe("<DateRangePicker>", () => {
     }
 
     function getOptionsText(selectElementClass: string): string[] {
-        return document.queryAll(`.DayPicker-Month:last-child .${selectElementClass} option`)
+        return queryAll(document, `.DayPicker-Month:last-child .${selectElementClass} option`)
             .map((e) => (e as HTMLElement).innerText);
     }
 
     function getSelectedDayElements() {
-        return document.queryAll(`.${DateClasses.DATEPICKER_DAY_SELECTED}:not(.${DateClasses.DATEPICKER_DAY_OUTSIDE})`);
+        const selector = `.${DateClasses.DATEPICKER_DAY_SELECTED}:not(.${DateClasses.DATEPICKER_DAY_OUTSIDE})`;
+        return queryAll(document, selector);
     }
 
     function getSelectedRangeDayElements() {
         const selectedRange = DateClasses.DATERANGEPICKER_DAY_SELECTED_RANGE;
-        return document.queryAll(`.${selectedRange}:not(.${DateClasses.DATEPICKER_DAY_OUTSIDE})`);
+        return queryAll(document, `.${selectedRange}:not(.${DateClasses.DATEPICKER_DAY_OUTSIDE})`);
     }
 
     function getYearSelect() {

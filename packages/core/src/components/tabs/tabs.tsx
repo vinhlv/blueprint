@@ -192,8 +192,14 @@ export class Tabs extends AbstractComponent<ITabsProps, ITabsState> {
         if (tabElement != null
                 && this.tabIds.indexOf(tabElement.id) >= 0
                 && tabElement.getAttribute("aria-disabled") !== "true") {
-            const index = tabElement.parentElement.queryAll(TAB_CSS_SELECTOR).indexOf(tabElement);
-
+            // array.indexOf(element) without an array...
+            const tabElements = tabElement.parentElement.querySelectorAll(TAB_CSS_SELECTOR);
+            let index: number;
+            for (index = 0; index < tabElements.length; index++) {
+                if (tabElements[index] === tabElement) {
+                    break;
+                }
+            }
             this.setSelectedTabIndex(index);
         }
     }

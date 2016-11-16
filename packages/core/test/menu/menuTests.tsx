@@ -13,6 +13,8 @@ import * as Errors from "../../src/common/errors";
 import { Classes, IMenuItemProps, IMenuProps, Menu, MenuDivider, MenuItem, Popover } from "../../src/index";
 import { MenuDividerFactory, MenuFactory, MenuItemFactory } from "../../src/index";
 
+import { queryClass, queryClassAll } from "../common/domUtils";
+
 describe("MenuItem", () => {
     it("React renders MenuItem", () => {
         const wrapper = shallow(<MenuItem iconName="graph" text="Graph" />);
@@ -109,7 +111,7 @@ describe("MenuItem", () => {
                 </MenuItem>
             ), childContainer) as MenuItem;
             hoverOverTarget(0, () => {
-                assert.isNotNull(childContainer.query(`.${Classes.ALIGN_LEFT}`));
+                assert.isNotNull(queryClass(childContainer, Classes.ALIGN_LEFT));
                 done();
             });
         });
@@ -123,8 +125,8 @@ describe("MenuItem", () => {
                 </MenuItem>
             ), childContainer) as MenuItem;
             hoverOverTarget(0, () => {
-                assert.isNotNull(childContainer.query(`.${Classes.OVERLAY_OPEN}`));
-                assert.isNull(childContainer.query(`.${Classes.ALIGN_LEFT}`));
+                assert.isNotNull(queryClass(childContainer, Classes.OVERLAY_OPEN));
+                assert.isNull(queryClass(childContainer, Classes.ALIGN_LEFT));
                 done();
             });
         });
@@ -189,7 +191,7 @@ describe("MenuItem", () => {
                 <MenuItem iconName="align" text="Alignment" submenu={items} />
             ), childContainer) as MenuItem;
             hoverOverTarget(0, () => {
-                assert.isNotNull(childContainer.query(`.${Classes.ALIGN_LEFT}`));
+                assert.isNotNull(queryClass(childContainer, Classes.ALIGN_LEFT));
                 done();
             });
         });
@@ -226,7 +228,7 @@ describe("MenuItem", () => {
         }
 
         function assertClassNameCount(className: string, count: number) {
-            assert.strictEqual(childContainer.queryAll(`.${className}`).length, count, `${count}x .${className}`);
+            assert.strictEqual(queryClassAll(childContainer, className).length, count, `${count}x .${className}`);
         }
     });
 });

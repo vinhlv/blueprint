@@ -1,0 +1,37 @@
+// Copyright 2017 Palantir Technologies, Inc. All rights reserved.
+// Licensed under the BSD-3 License as modified (the “License”); you may obtain a copy
+// of the license at https://github.com/palantir/blueprint/blob/master/LICENSE
+// and https://github.com/palantir/blueprint/blob/master/PATENTS
+
+// todo convert to BP prefixes
+
+@import "../../common/variables";
+
+.ws-loading-bar {
+  $ws-transition-time-fast: 250ms;
+  $ws-transition-time-slow: 4000ms;
+
+  position: absolute;
+  top: 0;
+  margin: 0 (-$pt-grid-size * 1.5);
+  box-shadow: 0 3px 3px rgba($blue5, 0.3);
+  background-color: $blue5;
+  width: 100%;
+  height: 3px;
+  transition: transform $ws-transition-time-fast ease-in;
+
+  &.ws-loading-bar-hidden {
+    height: 0;
+    // long transition animation
+    // stylelint-disable-next-line max-line-length
+    transition: transform $ws-transition-time-fast linear, height $ws-transition-time-fast ease-in ($ws-transition-time-fast + 200ms);
+  }
+
+  &.ws-loading-bar-no-transition {
+    transition: none;
+  }
+
+  &.ws-loading-bar-slow-transition {
+    transition: transform $ws-transition-time-slow ease-out;
+  }
+}

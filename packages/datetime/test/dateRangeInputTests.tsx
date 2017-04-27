@@ -353,30 +353,30 @@ describe("<DateRangeInput>", () => {
     });
 
     describe("when uncontrolled", () => {
-        describe("Displaying a provided defaultValue", () => {
-            it("Shows empty fields when defaultValue is [null, null]", () => {
+        describe("displaying a provided defaultValue", () => {
+            it("shows empty fields when defaultValue is [null, null]", () => {
                 const { root } = wrap(<DateRangeInput defaultValue={[null, null]} />);
                 assertInputTextsEqual(root, "", "");
             });
 
-            it("Shows empty start field and formatted date in end field when defaultValue is [null, <date>]", () => {
+            it("shows empty start field and formatted date in end field when defaultValue is [null, <date>]", () => {
                 const { root } = wrap(<DateRangeInput defaultValue={[null, END_DATE]} />);
                 assertInputTextsEqual(root, "", END_STR);
             });
 
-            it("Shows empty end field and formatted date in start field when defaultValue is [<date>, null]", () => {
+            it("shows empty end field and formatted date in start field when defaultValue is [<date>, null]", () => {
                 const { root } = wrap(<DateRangeInput defaultValue={[START_DATE, null]} />);
                 assertInputTextsEqual(root, START_STR, "");
             });
 
-            it("Shows formatted dates in both fields when defaultValue is [<date1>, <date2>]", () => {
+            it("shows formatted dates in both fields when defaultValue is [<date1>, <date2>]", () => {
                 const { root } = wrap(<DateRangeInput defaultValue={[START_DATE, END_DATE]} />);
                 assertInputTextsEqual(root, START_STR, END_STR);
             });
         });
 
-        describe("Selecting dates", () => {
-            it("Clicking a date invokes onChange with the new date range and updates the input fields", () => {
+        describe("selecting dates", () => {
+            it("clicking a date invokes onChange with the new date range and updates the input fields", () => {
                 const defaultValue = [START_DATE, null] as DateRange;
 
                 const onChange = sinon.spy();
@@ -406,7 +406,7 @@ describe("<DateRangeInput>", () => {
                 expect(onChange.callCount).to.equal(4);
             });
 
-            it(`Typing a valid start or end date invokes onChange with the new date range and updates the
+            it(`typing a valid start or end date invokes onChange with the new date range and updates the
                 input fields`, () => {
                 const onChange = sinon.spy();
                 const { root } = wrap(<DateRangeInput onChange={onChange} defaultValue={DATE_RANGE} />);
@@ -422,7 +422,7 @@ describe("<DateRangeInput>", () => {
                 assertInputTextsEqual(root, START_STR_2, END_STR_2);
             });
 
-            it(`Typing in a field while hovering over a date shows the typed date, not the hovered date`, () => {
+            it(`typing in a field while hovering over a date shows the typed date, not the hovered date`, () => {
                 const onChange = sinon.spy();
                 const { root, getDayElement } = wrap(<DateRangeInput onChange={onChange} defaultValue={DATE_RANGE} />);
 
@@ -433,8 +433,8 @@ describe("<DateRangeInput>", () => {
             });
         });
 
-        describe("Clearing dates", () => {
-            it("Clearing the date range in the picker invokes onChange with [null, null] and clears the inputs", () => {
+        describe("clearing dates", () => {
+            it("clearing the date range in the picker invokes onChange with [null, null] and clears the inputs", () => {
                 const onChange = sinon.spy();
                 const defaultValue = [START_DATE, null] as DateRange;
 
@@ -448,7 +448,7 @@ describe("<DateRangeInput>", () => {
                 expect(onChange.calledWith([null, null])).to.be.true;
             });
 
-            it("Clearing only the start input (e.g.) invokes onChange with [null, <endDate>]", () => {
+            it("clearing only the start input (e.g.) invokes onChange with [null, <endDate>]", () => {
                 const onChange = sinon.spy();
                 const { root } = wrap(<DateRangeInput onChange={onChange} defaultValue={DATE_RANGE} />);
 
@@ -460,7 +460,7 @@ describe("<DateRangeInput>", () => {
                 assertInputTextsEqual(root, "", END_STR);
             });
 
-            it("Clearing both dates invokes onChange with [null, null] and leaves the inputs empty", () => {
+            it("clearing both dates invokes onChange with [null, null] and leaves the inputs empty", () => {
                 const onChange = sinon.spy();
                 const { root } = wrap(<DateRangeInput onChange={onChange} defaultValue={[START_DATE, null]} />);
                 getStartInput(root).simulate("focus");
@@ -471,7 +471,7 @@ describe("<DateRangeInput>", () => {
             });
         });
 
-        describe("Hovering over dates", () => {
+        describe("hovering over dates", () => {
             // define new constants to clarify chronological ordering of dates
             // TODO: rename all date constants in this file to use a similar
             // scheme, then get rid of these extra constants
@@ -1689,7 +1689,7 @@ describe("<DateRangeInput>", () => {
             });
         });
 
-        describe("Typing an out-of-range date", () => {
+        describe("typing an out-of-range date", () => {
             // we run the same four tests for each of several cases. putting
             // setup logic in beforeEach lets us express our it(...) tests as
             // nice one-liners further down this block, and it also gives
@@ -1783,7 +1783,7 @@ describe("<DateRangeInput>", () => {
             }
         });
 
-        describe("Typing an invalid date", () => {
+        describe("typing an invalid date", () => {
             let onChange: Sinon.SinonSpy;
             let onError: Sinon.SinonSpy;
             let root: WrappedComponentRoot;
@@ -1895,7 +1895,7 @@ describe("<DateRangeInput>", () => {
 
         // this test sub-suite is structured a little differently because of the
         // different semantics of this error case in each field
-        describe("Typing an overlapping date", () => {
+        describe("typing an overlapping date", () => {
             let onChange: Sinon.SinonSpy;
             let onError: Sinon.SinonSpy;
             let root: WrappedComponentRoot;
@@ -2007,9 +2007,9 @@ describe("<DateRangeInput>", () => {
 
     describe("when controlled", () => {
 
-        describe("Displaying a provided value", () => {
+        describe("displaying a provided value", () => {
 
-            it("Setting value causes defaultValue to be ignored", () => {
+            it("setting value causes defaultValue to be ignored", () => {
                 const { root } = wrap(<DateRangeInput
                     defaultValue={DATE_RANGE_2}
                     value={DATE_RANGE}
@@ -2017,27 +2017,27 @@ describe("<DateRangeInput>", () => {
                 assertInputTextsEqual(root, START_STR, END_STR);
             });
 
-            it("Setting value to [null, null] shows empty fields", () => {
+            it("setting value to [null, null] shows empty fields", () => {
                 const { root } = wrap(<DateRangeInput value={[null, null]} />);
                 assertInputTextsEqual(root, "", "");
             });
 
-            it("Shows empty start field and formatted date in end field when value is [null, <date>]", () => {
+            it("shows empty start field and formatted date in end field when value is [null, <date>]", () => {
                 const { root } = wrap(<DateRangeInput value={[null, END_DATE]} />);
                 assertInputTextsEqual(root, "", END_STR);
             });
 
-            it("Shows empty end field and formatted date in start field when value is [<date>, null]", () => {
+            it("shows empty end field and formatted date in start field when value is [<date>, null]", () => {
                 const { root } = wrap(<DateRangeInput value={[START_DATE, null]} />);
                 assertInputTextsEqual(root, START_STR, "");
             });
 
-            it("Shows formatted dates in both fields when value is [<date1>, <date2>]", () => {
+            it("shows formatted dates in both fields when value is [<date1>, <date2>]", () => {
                 const { root } = wrap(<DateRangeInput value={[START_DATE, END_DATE]} />);
                 assertInputTextsEqual(root, START_STR, END_STR);
             });
 
-            it("Updating value changes the text accordingly in both fields", () => {
+            it("updating value changes the text accordingly in both fields", () => {
                 const { root } = wrap(<DateRangeInput value={DATE_RANGE} />);
                 root.setState({ isOpen: true });
                 root.setProps({ value: DATE_RANGE_2 });
@@ -2045,9 +2045,9 @@ describe("<DateRangeInput>", () => {
             });
         });
 
-        describe("Selecting dates", () => {
+        describe("selecting dates", () => {
 
-            it("Clicking a date invokes onChange with the new date range and updates the input field text", () => {
+            it("clicking a date invokes onChange with the new date range and updates the input field text", () => {
                 const onChange = sinon.spy();
                 const { root, getDayElement } = wrap(<DateRangeInput value={DATE_RANGE} onChange={onChange} />);
                 getStartInput(root).simulate("focus"); // to open popover
@@ -2057,7 +2057,7 @@ describe("<DateRangeInput>", () => {
                 expect(onChange.callCount).to.equal(1);
             });
 
-            it("Typing a valid start or end date invokes onChange with the new date range with no UI change", () => {
+            it("typing a valid start or end date invokes onChange with the new date range with no UI change", () => {
                 const onChange = sinon.spy();
                 const { root } = wrap(<DateRangeInput onChange={onChange} value={DATE_RANGE} />);
 
@@ -2073,7 +2073,7 @@ describe("<DateRangeInput>", () => {
                 assertInputTextsEqual(root, START_STR, END_STR);
             });
 
-            it("Clicking a start date causes focus to move to end field", () => {
+            it("clicking a start date causes focus to move to end field", () => {
                 let controlledRoot: WrappedComponentRoot;
 
                 const onChange = (nextValue: DateRange) => controlledRoot.setProps({ value: nextValue });
@@ -2085,7 +2085,7 @@ describe("<DateRangeInput>", () => {
                 assertEndInputFocused(controlledRoot);
             });
 
-            it("Typing in a field while hovering over a date shows the typed date, not the hovered date", () => {
+            it("typing in a field while hovering over a date shows the typed date, not the hovered date", () => {
                 let controlledRoot: WrappedComponentRoot;
 
                 const onChange = (nextValue: DateRange) => controlledRoot.setProps({ value: nextValue });
@@ -2099,9 +2099,9 @@ describe("<DateRangeInput>", () => {
             });
         });
 
-        describe("Clearing dates", () => {
+        describe("clearing dates", () => {
 
-            it("Clearing the dates in the picker invokes onChange with [null, null] and updates input fields", () => {
+            it("clearing the dates in the picker invokes onChange with [null, null] and updates input fields", () => {
                 const onChange = sinon.spy();
                 const value = [START_DATE, null] as DateRange;
 
@@ -2115,7 +2115,7 @@ describe("<DateRangeInput>", () => {
                 assertInputTextsEqual(root, "", "");
             });
 
-            it(`Clearing only the start input (e.g.) invokes onChange with [null, <endDate>], doesn't clear the\
+            it(`clearing only the start input (e.g.) invokes onChange with [null, <endDate>], doesn't clear the\
                 selected dates, and repopulates the controlled values in the inputs on blur`, () => {
                 const onChange = sinon.spy();
                 const { root, getDayElement } = wrap(<DateRangeInput onChange={onChange} value={DATE_RANGE} />);
@@ -2136,7 +2136,7 @@ describe("<DateRangeInput>", () => {
                 assertInputTextsEqual(root, START_STR, END_STR);
             });
 
-            it(`Clearing the inputs invokes onChange with [null, null], doesn't clear the selected dates, and\
+            it(`clearing the inputs invokes onChange with [null, null], doesn't clear the selected dates, and\
                 repopulates the controlled values in the inputs on blur`, () => {
                 const onChange = sinon.spy();
                 const { root, getDayElement } = wrap(<DateRangeInput onChange={onChange} value={[START_DATE, null]} />);
@@ -2156,7 +2156,7 @@ describe("<DateRangeInput>", () => {
             });
         });
 
-        describe("Typing an out-of-range date", () => {
+        describe("typing an out-of-range date", () => {
             let onChange: Sinon.SinonSpy;
             let onError: Sinon.SinonSpy;
             let root: WrappedComponentRoot;
@@ -2209,7 +2209,7 @@ describe("<DateRangeInput>", () => {
             }
         });
 
-        describe("Typing an invalid date", () => {
+        describe("typing an invalid date", () => {
             let onChange: Sinon.SinonSpy;
             let onError: Sinon.SinonSpy;
             let root: WrappedComponentRoot;
@@ -2260,7 +2260,7 @@ describe("<DateRangeInput>", () => {
             }
         });
 
-        describe("Typing an overlapping date", () => {
+        describe("typing an overlapping date", () => {
             let onChange: Sinon.SinonSpy;
             let onError: Sinon.SinonSpy;
             let root: WrappedComponentRoot;

@@ -189,7 +189,7 @@ export class DateInput extends AbstractComponent<IDateInputProps, IDateInputStat
                 onChange={this.handleDateChange}
                 value={dateValue}
                 datePickerProps={this.props}
-                timePickerProps={{ precision: this.props.timePrecision }}
+                timePickerProps={this.props.timePrecision}
             />;
         // assign default empty object here to prevent mutation
         const { inputProps = {}, popoverProps = {} } = this.props;
